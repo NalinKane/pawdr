@@ -1,16 +1,10 @@
 import React from "react";
-import Icon from "@material-ui/core/Icon";
 
-function Home() {
+function Login() {
   return (
     <div className="column">
       <div className="pageBody">
-        <h1 className="heading">
-          pawdr <Icon>petsIcon</Icon>
-        </h1>
-
         <p className="paragraph">
-          pawdr
           <br />
           <br />
           Let's walk. <br />
@@ -21,4 +15,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Login;

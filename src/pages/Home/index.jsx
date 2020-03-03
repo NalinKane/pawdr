@@ -1,21 +1,18 @@
 import React from "react";
-import Icon from "@material-ui/core/Icon";
+
+import NavBar from "../../components/NavBar/index";
 
 function Home() {
   return (
-    <div className="column">
-      <div className="pageBody">
-        <h1 className="heading">
-          pawdr <Icon>petsIcon</Icon>
-        </h1>
-
-        <p className="paragraph">
-          pawdr
-          <br />
-          <br />
-          Let's walk. <br />
-          <br />
-        </p>
+    <div>
+      <NavBar />
+      <div className="column">
+        <div className="pageBody">
+          <p className="paragraph">
+            Let's walk. <br />
+            <br />
+          </p>
+        </div>
       </div>
     </div>
   );
