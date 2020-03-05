@@ -9,6 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { Link as RouterLink } from "react-router-dom";
+import { Login } from "../../services/LoginService";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -38,6 +39,8 @@ export default function SignIn() {
     password: ""
   });
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   function onChange(e) {
     e.preventDefault();
     const value = e.target.value;
@@ -51,10 +54,22 @@ export default function SignIn() {
     }
   }
 
-  function onSubmit(e) {
+  async function onSubmit(e) {
     e.preventDefault();
 
-    console.log("LOGGING IN....", formData);
+    if (isSubmitting) {
+      return;
+    }
+
+    try {
+      setIsSubmitting(true);
+      const data = await Login(formData);
+      console.log("LOGGED IN!", data);
+    } catch (e) {
+      throw new Error(e);
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -100,7 +115,7 @@ export default function SignIn() {
             className={classes.submit}
             onClick={onSubmit}
           >
-            Login
+            {isSubmitting ? "Logging in..." : "Login"}
           </Button>
           <Grid container>
             <Grid item>
