@@ -1,16 +1,22 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-// import Layout from "../Layout";
+import { ThemeProvider } from "@material-ui/core/styles";
+import theme from "./configuration/theme";
+import Layout from "./components/Layout";
 import routes from "./routes";
 
 function App() {
   return (
     <Router>
-      <Switch>
-        {routes.map((route, i) => (
-          <Route key={i} {...route} />
-        ))}
-      </Switch>
+      <ThemeProvider theme={theme}>
+        <Layout>
+          <Switch>
+            {routes.map((route, i) => (
+              <Route key={i} {...route} />
+            ))}
+          </Switch>
+        </Layout>
+      </ThemeProvider>
     </Router>
   );
 }
