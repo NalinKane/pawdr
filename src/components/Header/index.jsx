@@ -9,19 +9,36 @@ import IconButton from "@material-ui/core/IconButton";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
+import Link from "@material-ui/core/Link";
+import { Link as RouterLink } from "react-router-dom";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1
   },
   title: {
     flexGrow: 1
+  },
+  logoParent: {
+    display: "flex"
+  },
+  headingLink: {
+    color: "white",
+    display: "block",
+    width: "90px",
+    "&.MuiLink-underlineHover:hover": {
+      textDecoration: "none"
+    }
+  },
+  paw: {
+    marginTop: theme.spacing(0.5),
+    marginLeft: theme.spacing(1)
   }
 }));
 
 export default function Header() {
   const classes = useStyles();
-  const [auth, setAuth] = React.useState(true);
+  const [auth, setAuth] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
@@ -42,8 +59,16 @@ export default function Header() {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" component="h1" className={classes.title}>
-            pawdr <PetsIcon />
+            <Link to="/" component={RouterLink} className={classes.headingLink}>
+              <div className={classes.logoParent}>
+                pawdr
+                <div className={classes.paw}>
+                  <PetsIcon />
+                </div>
+              </div>
+            </Link>
           </Typography>
+
           {auth && (
             <div>
               <IconButton
@@ -75,7 +100,11 @@ export default function Header() {
               </Menu>
             </div>
           )}
-          {!auth && <Button color="inherit">Login</Button>}
+          {!auth && (
+            <Button component={RouterLink} to="/login" color="inherit">
+              Login
+            </Button>
+          )}
         </Toolbar>
       </AppBar>
     </div>

@@ -4,6 +4,7 @@ import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
+import { Link as RouterLink } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   icon: {
@@ -20,7 +21,10 @@ const useStyles = makeStyles(theme => ({
     position: "fixed",
     width: "100%",
     bottom: 0,
-    left: 0
+    left: 0,
+    [theme.breakpoints.up("sm")]: {
+      width: "300px"
+    }
   }
 }));
 
@@ -59,7 +63,12 @@ function Home() {
               </Button>
             </Grid>
             <Grid item>
-              <Button variant="outlined" color="primary">
+              <Button
+                variant="outlined"
+                color="primary"
+                component={RouterLink}
+                to="/login"
+              >
                 Login
               </Button>
             </Grid>
