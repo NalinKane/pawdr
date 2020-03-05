@@ -54,6 +54,12 @@ export default function SignIn() {
     }
   }
 
+  function onSubmit(e) {
+    e.preventDefault();
+
+    console.log(formData);
+  }
+
   return (
     <Container component="main" maxWidth="xs">
       <div className={classes.paper}>
@@ -139,6 +145,7 @@ export default function SignIn() {
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={onSubmit}
           >
             Register
           </Button>

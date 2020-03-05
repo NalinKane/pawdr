@@ -7,6 +7,10 @@ import Button from "@material-ui/core/Button";
 import { Link as RouterLink } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
+  root: {
+    position: "relative",
+    zIndex: 1
+  },
   icon: {
     marginRight: theme.spacing(2)
   },
@@ -23,7 +27,9 @@ const useStyles = makeStyles(theme => ({
     bottom: 0,
     left: 0,
     [theme.breakpoints.up("sm")]: {
-      width: "300px"
+      width: "300px",
+      left: "50%",
+      marginLeft: "-150px"
     }
   }
 }));
@@ -33,7 +39,7 @@ function Home() {
 
   return (
     <div className={classes.heroContent}>
-      <Container maxWidth="sm" disableGutters>
+      <Container maxWidth="sm" disableGutters className={classes.root}>
         <Typography
           component="h1"
           variant="h3"
@@ -49,7 +55,7 @@ function Home() {
           color="textPrimary"
           gutterBottom
         >
-          Let's walk
+          Let's walk.
         </Typography>
         <Typography variant="h5" align="center" color="textSecondary" paragraph>
           World's best app for matching with your dog friends when you go for
