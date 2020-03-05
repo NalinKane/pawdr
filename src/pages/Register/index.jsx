@@ -1,14 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import Link from "@material-ui/core/Link";
-import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import { Link as RouterLink } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -22,7 +19,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.secondary.main
   },
   form: {
-    width: "100%", // Fix IE 11 issue.
+    width: "100%",
     marginTop: theme.spacing(1)
   },
   submit: {
@@ -33,6 +30,30 @@ const useStyles = makeStyles(theme => ({
 export default function SignIn() {
   const classes = useStyles();
 
+  const [formData, setFormData] = useState({
+    firstname: "",
+    lastname: "",
+    location: "",
+    username: "",
+    email: "",
+    password: ""
+  });
+
+  function onChange(e) {
+    e.preventDefault();
+    const value = e.target.value;
+    const name = e.target.name;
+
+    if (value) {
+      setFormData({
+        ...formData,
+        [name]: value
+      });
+
+      console.log(formData);
+    }
+  }
+
   return (
     <Container component="main" maxWidth="xs">
       <div className={classes.paper}>
@@ -40,7 +61,7 @@ export default function SignIn() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Login
+          Register
         </Typography>
         <form className={classes.form} noValidate>
           <TextField
@@ -48,11 +69,57 @@ export default function SignIn() {
             margin="normal"
             required
             fullWidth
+            id="firstname"
+            label="First name"
+            name="firstname"
+            autoComplete="firstname"
+            onChange={onChange}
+            autoFocus
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="lastname"
+            label="Last name"
+            onChange={onChange}
+            name="lastname"
+            autoComplete="lastname"
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="location"
+            label="Your location"
+            onChange={onChange}
+            name="location"
+            autoComplete="location"
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="username"
+            label="Username"
+            onChange={onChange}
+            id="username"
+            autoComplete="username"
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
             id="email"
             label="Email Address"
+            onChange={onChange}
             name="email"
+            type="email"
             autoComplete="email"
-            autoFocus
           />
           <TextField
             variant="outlined"
@@ -61,11 +128,11 @@ export default function SignIn() {
             fullWidth
             name="password"
             label="Password"
+            onChange={onChange}
             type="password"
             id="password"
             autoComplete="current-password"
           />
-
           <Button
             type="submit"
             fullWidth
@@ -73,15 +140,8 @@ export default function SignIn() {
             color="primary"
             className={classes.submit}
           >
-            Login
+            Register
           </Button>
-          <Grid container>
-            <Grid item>
-              <Link component={RouterLink} to="/register" variant="body2">
-                {"Don't have an account? Register"}
-              </Link>
-            </Grid>
-          </Grid>
         </form>
       </div>
     </Container>

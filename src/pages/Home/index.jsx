@@ -58,7 +58,12 @@ function Home() {
         <div className={classes.heroButtons}>
           <Grid container spacing={2} justify="center">
             <Grid item>
-              <Button variant="contained" color="primary">
+              <Button
+                variant="contained"
+                color="primary"
+                component={RouterLink}
+                to="/register"
+              >
                 Create account
               </Button>
             </Grid>
