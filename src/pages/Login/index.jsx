@@ -54,12 +54,19 @@ export default function SignIn() {
     }
   }
 
+  function validateForm() {
+    if (!formData.username && !formData.password) {
+      return true;
+    }
+    return false;
+  }
+
   async function onSubmit(e) {
     e.preventDefault();
 
-    if (isSubmitting) {
-      return;
-    }
+    if (validateForm()) return;
+
+    if (isSubmitting) return;
 
     try {
       setIsSubmitting(true);
@@ -93,6 +100,7 @@ export default function SignIn() {
             autoComplete="username"
             autoFocus
             onChange={onChange}
+            disabled={isSubmitting}
           />
           <TextField
             variant="outlined"
@@ -105,6 +113,7 @@ export default function SignIn() {
             id="password"
             autoComplete="current-password"
             onChange={onChange}
+            disabled={isSubmitting}
           />
 
           <Button
