@@ -6,6 +6,8 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import { Register } from "../../services/RegisterService";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -29,10 +31,11 @@ const useStyles = makeStyles(theme => ({
 
 export default function SignIn() {
   const classes = useStyles();
+  const history = useHistory();
 
   const [formData, setFormData] = useState({
-    firstname: "",
-    lastname: "",
+    firstName: "",
+    lastName: "",
     location: "",
     username: "",
     email: "",
@@ -49,13 +52,18 @@ export default function SignIn() {
         ...formData,
         [name]: value
       });
-
-      console.log(formData);
     }
   }
 
-  function onSubmit(e) {
+  async function onSubmit(e) {
     e.preventDefault();
+
+    try {
+      await Register(formData);
+      history.push("/login");
+    } catch (e) {
+      console.log("error", e.response.data);
+    }
 
     console.log(formData);
   }
@@ -75,10 +83,10 @@ export default function SignIn() {
             margin="normal"
             required
             fullWidth
-            id="firstname"
+            id="firstName"
             label="First name"
-            name="firstname"
-            autoComplete="firstname"
+            name="firstName"
+            autoComplete="firstName"
             onChange={onChange}
             autoFocus
           />
@@ -87,11 +95,11 @@ export default function SignIn() {
             margin="normal"
             required
             fullWidth
-            id="lastname"
+            id="lastName"
             label="Last name"
             onChange={onChange}
-            name="lastname"
-            autoComplete="lastname"
+            name="lastName"
+            autoComplete="lastName"
           />
           <TextField
             variant="outlined"
