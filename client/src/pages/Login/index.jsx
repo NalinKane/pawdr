@@ -35,7 +35,7 @@ export default function SignIn() {
   const classes = useStyles();
 
   const [formData, setFormData] = useState({
-    username: "",
+    email: "",
     password: ""
   });
 
@@ -55,7 +55,7 @@ export default function SignIn() {
   }
 
   function validateForm() {
-    if (!formData.username && !formData.password) {
+    if (!formData.email && !formData.password) {
       return true;
     }
     return false;
@@ -70,8 +70,8 @@ export default function SignIn() {
 
     try {
       setIsSubmitting(true);
-      const data = await Login(formData);
-      console.log("LOGGED IN!", data);
+      await Login(formData);
+      console.log("logged in!");
     } catch (e) {
       throw new Error(e);
     } finally {
@@ -94,10 +94,10 @@ export default function SignIn() {
             margin="normal"
             required
             fullWidth
-            id="username"
-            label="Username"
-            name="username"
-            autoComplete="username"
+            id="email"
+            label="Email"
+            name="email"
+            autoComplete="email"
             autoFocus
             onChange={onChange}
             disabled={isSubmitting}
