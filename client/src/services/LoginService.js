@@ -1,15 +1,14 @@
 import axios from "axios";
 import jwt_decode from "jwt-decode";
+import create from "zustand";
+import { setAuthToken } from "../utils/setAuthToken";
 
-const setAuthToken = token => {
-  if (token) {
-    // Apply authorization token to every request if logged in
-    axios.defaults.headers.common["Authorization"] = token;
-  } else {
-    // Delete auth header
-    delete axios.defaults.headers.common["Authorization"];
+const [useStore] = create(set => ({
+  user: {},
+  loadUser: data => {
+    set({ user: data });
   }
-};
+}));
 
 export async function Login(userData) {
   try {
@@ -26,7 +25,7 @@ export async function Login(userData) {
 
     const decoded = jwt_decode(token);
 
-    // store decoded somehwere
+    return decoded;
   } catch (e) {
     throw new Error(e);
   }
@@ -41,3 +40,5 @@ export function Logout() {
 
   // Set current user to empty object {} which will set isAuthenticated to false
 }
+
+export const useCustomerStore = useStore;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
@@ -9,7 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { Link as RouterLink } from "react-router-dom";
-import { Login } from "../../services/LoginService";
+import { Login, useCustomerStore } from "../../services/LoginService";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -33,6 +33,11 @@ const useStyles = makeStyles(theme => ({
 
 export default function SignIn() {
   const classes = useStyles();
+  const { user, loadUser } = useCustomerStore();
+
+  useEffect(() => {
+    console.log("user is", user);
+  }, [user]);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -70,8 +75,8 @@ export default function SignIn() {
 
     try {
       setIsSubmitting(true);
-      await Login(formData);
-      console.log("logged in!");
+      const data = await Login(formData);
+      loadUser(data);
     } catch (e) {
       throw new Error(e);
     } finally {
