@@ -33,4 +33,24 @@ router.post(
   }
 );
 
+// @route GET api/pets/show
+// @desc Show owners pets
+// @access Private
+router.get(
+  "/show",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    try {
+      const { user } = res.req;
+
+      const owner = await User.findOne({ _id: user._id });
+      const ownerPets = await Pet.find({ ownerId: owner._id });
+
+      res.send(ownerPets);
+    } catch (error) {
+      console.warn(error);
+    }
+  }
+);
+
 module.exports = router;

@@ -13,3 +13,11 @@ export async function CreatePet(petData) {
     throw new Error(e);
   }
 }
+
+export async function GetMyPets() {
+  try {
+    return axios.get("/api/pets/show");
+  } catch (e) {
+    throw new Error(e);
+  }
+}
