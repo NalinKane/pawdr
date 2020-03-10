@@ -40,7 +40,7 @@ export default function SignIn() {
     if (user) {
       history.push("/");
     }
-  }, [user]);
+  }, [user, history]);
 
   const [formData, setFormData] = useState({
     email: "",

@@ -32,7 +32,7 @@ function App() {
         window.location.href = "./login";
       }
     }
-  }, []);
+  }, [loadUser]);
 
   return (
     <Router>
