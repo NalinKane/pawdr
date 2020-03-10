@@ -11,6 +11,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import Link from "@material-ui/core/Link";
 import { Link as RouterLink } from "react-router-dom";
+import { useCustomerStore, Logout } from "../../services/LoginService";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -38,13 +39,10 @@ const useStyles = makeStyles(theme => ({
 
 export default function Header() {
   const classes = useStyles();
-  const [auth, setAuth] = React.useState(false);
+  const { user, loadUser } = useCustomerStore();
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-
-  const handleChange = event => {
-    setAuth(event.target.checked);
-  };
 
   const handleMenu = event => {
     setAnchorEl(event.currentTarget);
@@ -52,6 +50,12 @@ export default function Header() {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    handleClose();
+    Logout();
+    loadUser(null);
   };
 
   return (
@@ -69,7 +73,7 @@ export default function Header() {
             </Link>
           </Typography>
 
-          {auth && (
+          {user && (
             <div>
               <IconButton
                 aria-label="account of current user"
@@ -96,11 +100,13 @@ export default function Header() {
                 onClose={handleClose}
               >
                 <MenuItem onClick={handleClose}>My pawfile</MenuItem>
-                <MenuItem onClick={handleClose}>Logout</MenuItem>
+                <MenuItem onClick={handleLogout}>
+                  Logout ({user.firstName})
+                </MenuItem>
               </Menu>
             </div>
           )}
-          {!auth && (
+          {!user && (
             <Button component={RouterLink} to="/login" color="inherit">
               Login
             </Button>

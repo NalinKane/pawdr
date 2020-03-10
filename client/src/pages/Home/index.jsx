@@ -5,6 +5,7 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import { Link as RouterLink } from "react-router-dom";
+import { useCustomerStore } from "../../services/LoginService";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -36,6 +37,7 @@ const useStyles = makeStyles(theme => ({
 
 function Home() {
   const classes = useStyles();
+  const { user } = useCustomerStore();
 
   return (
     <div className={classes.heroContent}>
@@ -47,7 +49,7 @@ function Home() {
           color="textPrimary"
           gutterBottom
         >
-          Welcome to pawdr!
+          Welcome to pawdr{user ? `, ${user.firstName}` : ""}!
         </Typography>
         <Typography
           variant="h5"
@@ -61,30 +63,32 @@ function Home() {
           World's best app for matching with your dog friends when you go for
           walkies.
         </Typography>
-        <div className={classes.heroButtons}>
-          <Grid container spacing={2} justify="center">
-            <Grid item>
-              <Button
-                variant="contained"
-                color="primary"
-                component={RouterLink}
-                to="/register"
-              >
-                Create account
-              </Button>
+        {!user && (
+          <div className={classes.heroButtons}>
+            <Grid container spacing={2} justify="center">
+              <Grid item>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  component={RouterLink}
+                  to="/register"
+                >
+                  Create account
+                </Button>
+              </Grid>
+              <Grid item>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  component={RouterLink}
+                  to="/login"
+                >
+                  Login
+                </Button>
+              </Grid>
             </Grid>
-            <Grid item>
-              <Button
-                variant="outlined"
-                color="primary"
-                component={RouterLink}
-                to="/login"
-              >
-                Login
-              </Button>
-            </Grid>
-          </Grid>
-        </div>
+          </div>
+        )}
       </Container>
       <img
         src="/promo-dog.jpg"

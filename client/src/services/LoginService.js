@@ -4,7 +4,7 @@ import create from "zustand";
 import { setAuthToken } from "../utils/setAuthToken";
 
 const [useStore] = create(set => ({
-  user: {},
+  user: null,
   loadUser: data => {
     set({ user: data });
   }
@@ -37,8 +37,6 @@ export function Logout() {
 
   // Remove auth header for future requests
   setAuthToken(false);
-
-  // Set current user to empty object {} which will set isAuthenticated to false
 }
 
 export const useCustomerStore = useStore;
