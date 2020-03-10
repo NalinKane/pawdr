@@ -1,21 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
 import { Link as RouterLink } from "react-router-dom";
 import { GetMyPets } from "../../services/PetService";
+import PetMiniProfile from "../../components/PetMiniProfile";
 
 export default function Dashboard() {
-  async function getMyPets(e) {
-    e.preventDefault();
-
-    try {
-      const data = await GetMyPets();
-      console.log("my pets are: ", data);
-    } catch (e) {
-      console.log("error", e.response.data);
+  const [myPets, setMyPets] = useState(null);
+  useEffect(() => {
+    async function getMyPets() {
+      try {
+        const data = await GetMyPets();
+        setMyPets(data);
+      } catch (e) {
+        console.log("error", e.response.data);
+      }
     }
-  }
+
+    getMyPets();
+  }, []);
 
   return (
     <Container component="main" maxWidth="xs">
@@ -30,9 +34,18 @@ export default function Dashboard() {
       >
         Add pet pawfile
       </Button>
-      <Button variant="contained" color="primary" onClick={getMyPets}>
-        Get my pets
-      </Button>
+      <hr />
+      {myPets && (
+        <>
+          <Typography component="h2" variant="h5">
+            My pets
+          </Typography>
+          {myPets.length > 0 &&
+            myPets.map(function renderPet(pet) {
+              return <PetMiniProfile key={pet._id} {...pet} />;
+            })}
+        </>
+      )}
     </Container>
   );
 }

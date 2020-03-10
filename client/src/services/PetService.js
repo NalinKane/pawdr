@@ -16,7 +16,8 @@ export async function CreatePet(petData) {
 
 export async function GetMyPets() {
   try {
-    return axios.get("/api/pets/show");
+    const { data } = await axios.get("/api/pets/show");
+    return data;
   } catch (e) {
     throw new Error(e);
   }
