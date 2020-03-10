@@ -7,6 +7,8 @@ import Layout from "./components/Layout";
 import routes from "./routes";
 import { setAuthToken } from "./utils/setAuthToken";
 import { useCustomerStore, Logout } from "./services/LoginService";
+import PrivateRoute from "./components/PrivateRoute";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
   const { loadUser } = useCustomerStore();
@@ -42,6 +44,9 @@ function App() {
             {routes.map((route, i) => (
               <Route key={i} {...route} />
             ))}
+            <PrivateRoute path="/dashboard">
+              <Dashboard />
+            </PrivateRoute>
           </Switch>
         </Layout>
       </ThemeProvider>

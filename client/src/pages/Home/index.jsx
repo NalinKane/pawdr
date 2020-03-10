@@ -63,6 +63,22 @@ function Home() {
           World's best app for matching with your dog friends when you go for
           walkies.
         </Typography>
+        {user && (
+          <div className={classes.heroButtons}>
+            <Grid container spacing={2} justify="center">
+              <Grid item>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  component={RouterLink}
+                  to="/dashboard"
+                >
+                  My dashboard
+                </Button>{" "}
+              </Grid>
+            </Grid>
+          </div>
+        )}
         {!user && (
           <div className={classes.heroButtons}>
             <Grid container spacing={2} justify="center">
