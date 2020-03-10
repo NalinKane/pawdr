@@ -1,6 +1,7 @@
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
+import CreatePet from "../pages/CreatePet";
 
 const routes = [
   {
@@ -15,6 +16,10 @@ const routes = [
   {
     path: "/register",
     component: Register
+  },
+  {
+    path: "/create-pet",
+    component: CreatePet
   }
 ];
 

@@ -74,7 +74,7 @@ function Home() {
                   to="/dashboard"
                 >
                   My dashboard
-                </Button>{" "}
+                </Button>
               </Grid>
             </Grid>
           </div>
