@@ -6,6 +6,7 @@ import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import { CreatePet } from "../../services/PetService";
 import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
@@ -52,11 +53,20 @@ export default function SignIn() {
     }
   }
 
+  function validateForm() {
+    if (!formData.name && !formData.breed && !formData.age && !formData.photo) {
+      return true;
+    }
+    return false;
+  }
+
   async function onSubmit(e) {
     e.preventDefault();
 
+    if (validateForm()) return;
+
     try {
-      // await Register(formData);
+      await CreatePet(formData);
       console.log("created pawfile");
       history.push("/dashboard");
     } catch (e) {

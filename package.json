@@ -36,9 +36,6 @@
     "if-env": "^1.0.4",
     "nodemon": "^2.0.2"
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
   "browserslist": {
     "production": [
       ">0.2%",
