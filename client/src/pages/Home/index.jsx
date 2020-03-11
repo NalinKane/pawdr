@@ -5,7 +5,7 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import { Link as RouterLink } from "react-router-dom";
-import { useCustomerStore } from "../../services/LoginService";
+import { useCustomerStore } from "../../store";
 
 const useStyles = makeStyles(theme => ({
   root: {

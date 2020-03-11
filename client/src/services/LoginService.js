@@ -1,14 +1,6 @@
 import axios from "axios";
 import jwt_decode from "jwt-decode";
-import create from "zustand";
 import { setAuthToken } from "../utils/setAuthToken";
-
-const [useStore] = create(set => ({
-  user: null,
-  loadUser: data => {
-    set({ user: data });
-  }
-}));
 
 export async function Login(userData) {
   try {
@@ -27,16 +19,6 @@ export async function Login(userData) {
 
     return decoded;
   } catch (e) {
-    throw new Error(e);
+    throw e;
   }
 }
-
-export function Logout() {
-  // Remove token from local storage
-  localStorage.removeItem("jwtToken");
-
-  // Remove auth header for future requests
-  setAuthToken(false);
-}
-
-export const useCustomerStore = useStore;

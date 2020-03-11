@@ -1,10 +1,9 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
-import { useCustomerStore } from "../../services/LoginService";
+import { useCustomerStore } from "../../store";
 
 function PrivateRoute({ children, ...rest }) {
   const { user } = useCustomerStore();
-  console.log("user", user);
   return (
     <Route
       {...rest}

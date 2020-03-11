@@ -9,7 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { Link as RouterLink, useHistory } from "react-router-dom";
-import { Login, useCustomerStore } from "../../services/LoginService";
+import { useCustomerStore } from "../../store";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -33,7 +33,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function SignIn() {
   const classes = useStyles();
-  const { user, loadUser } = useCustomerStore();
+  const { user, login } = useCustomerStore();
   const history = useHistory();
 
   useEffect(() => {
@@ -78,12 +78,10 @@ export default function SignIn() {
 
     try {
       setIsSubmitting(true);
-      const data = await Login(formData);
-      loadUser(data);
+      await login(formData);
     } catch (e) {
-      throw new Error(e);
-    } finally {
       setIsSubmitting(false);
+      console.error(e.response.data);
     }
   }
 

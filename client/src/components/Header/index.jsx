@@ -11,7 +11,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import Link from "@material-ui/core/Link";
 import { Link as RouterLink } from "react-router-dom";
-import { useCustomerStore, Logout } from "../../services/LoginService";
+import { useCustomerStore } from "../../store";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -39,7 +39,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function Header() {
   const classes = useStyles();
-  const { user, loadUser } = useCustomerStore();
+  const { user, logout } = useCustomerStore();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -54,8 +54,7 @@ export default function Header() {
 
   const handleLogout = () => {
     handleClose();
-    Logout();
-    loadUser(null);
+    logout();
   };
 
   return (
