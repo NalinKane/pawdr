@@ -42,7 +42,7 @@ export default function Dashboard() {
           </Typography>
           {myPets.length > 0 &&
             myPets.map(function renderPet(pet) {
-              return <PetMiniProfile key={pet._id} {...pet} />;
+              return <PetMiniProfile key={pet.id} {...pet} />;
             })}
         </>
       )}

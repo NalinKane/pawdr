@@ -44,9 +44,26 @@ router.get(
       const { user } = res.req;
 
       const owner = await User.findOne({ _id: user._id });
-      const ownerPets = await Pet.find({ ownerId: owner._id });
 
-      res.send(ownerPets);
+      const query = Pet.find({
+        ownerId: owner._id
+      });
+
+      query.getFilter();
+
+      const ownerPets = await query.exec();
+
+      const transformedOwnerPets = ownerPets.map(pet => {
+        return {
+          name: pet.name,
+          breed: pet.breed,
+          age: pet.age,
+          photo: pet.photo,
+          id: pet._id
+        };
+      });
+
+      res.send(transformedOwnerPets);
     } catch (error) {
       console.warn(error);
     }
