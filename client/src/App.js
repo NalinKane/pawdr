@@ -8,8 +8,8 @@ import routes from "./routes";
 import { setAuthToken } from "./utils/setAuthToken";
 import { useCustomerStore } from "./store";
 import PrivateRoute from "./components/PrivateRoute";
-import Dashboard from "./pages/Dashboard";
 import CreatePet from "./pages/CreatePet";
+import Pawfile from "./pages/Pawfile";
 
 function App() {
   const { user, loadUser, logout } = useCustomerStore();
@@ -52,8 +52,8 @@ function App() {
               {routes.map((route, i) => (
                 <Route key={i} {...route} />
               ))}
-              <PrivateRoute path="/dashboard">
-                <Dashboard />
+              <PrivateRoute path="/pawfile">
+                <Pawfile />
               </PrivateRoute>
               <PrivateRoute path="/create-pet">
                 <CreatePet />

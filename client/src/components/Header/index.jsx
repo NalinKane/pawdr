@@ -98,7 +98,13 @@ export default function Header() {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>My pawfile</MenuItem>
+                <MenuItem
+                  component={RouterLink}
+                  to="/pawfile"
+                  onClick={handleClose}
+                >
+                  My pawfile
+                </MenuItem>
                 <MenuItem onClick={handleLogout}>
                   Logout ({user.firstName})
                 </MenuItem>

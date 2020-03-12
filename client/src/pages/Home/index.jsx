@@ -71,9 +71,9 @@ function Home() {
                   variant="contained"
                   color="primary"
                   component={RouterLink}
-                  to="/dashboard"
+                  to="/pawfile"
                 >
-                  My dashboard
+                  My pawfile
                 </Button>
               </Grid>
             </Grid>

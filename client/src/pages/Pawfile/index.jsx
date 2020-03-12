@@ -6,7 +6,7 @@ import { Link as RouterLink } from "react-router-dom";
 import { GetMyPets } from "../../services/PetService";
 import PetMiniProfile from "../../components/PetMiniProfile";
 
-export default function Dashboard() {
+export default function Pawfile() {
   const [myPets, setMyPets] = useState(null);
   useEffect(() => {
     async function getMyPets() {
@@ -24,7 +24,7 @@ export default function Dashboard() {
   return (
     <Container component="main" maxWidth="xs">
       <Typography component="h1" variant="h3">
-        Dashboard
+        My Pawfile
       </Typography>
       <Button
         variant="contained"
@@ -32,7 +32,7 @@ export default function Dashboard() {
         component={RouterLink}
         to="/create-pet"
       >
-        Add pet pawfile
+        Add a new pet
       </Button>
       <hr />
       {myPets && (

@@ -68,7 +68,7 @@ export default function SignIn() {
     try {
       await CreatePet(formData);
       console.log("created pawfile");
-      history.push("/dashboard");
+      history.push("/pawfile");
     } catch (e) {
       console.log("error", e.response.data);
     }
