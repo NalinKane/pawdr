@@ -10,6 +10,7 @@ import { useCustomerStore } from "./store";
 import PrivateRoute from "./components/PrivateRoute";
 import CreatePet from "./pages/CreatePet";
 import Pawfile from "./pages/Pawfile";
+import Search from "./pages/Search";
 
 function App() {
   const { user, loadUser, logout } = useCustomerStore();
@@ -57,6 +58,9 @@ function App() {
               </PrivateRoute>
               <PrivateRoute path="/create-pet">
                 <CreatePet />
+              </PrivateRoute>
+              <PrivateRoute path="/search">
+                <Search />
               </PrivateRoute>
             </Switch>
           )}

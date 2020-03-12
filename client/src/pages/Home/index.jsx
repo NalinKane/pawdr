@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useHistory } from "react-router-dom";
 import { useCustomerStore } from "../../store";
 
 const useStyles = makeStyles(theme => ({
@@ -38,6 +38,13 @@ const useStyles = makeStyles(theme => ({
 function Home() {
   const classes = useStyles();
   const { user } = useCustomerStore();
+  const history = useHistory();
+
+  useEffect(() => {
+    if (user) {
+      history.push("/search");
+    }
+  }, [user, history]);
 
   return (
     <div className={classes.heroContent}>
