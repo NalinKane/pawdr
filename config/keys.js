@@ -1,4 +1,4 @@
 module.exports = {
-    mongoURI: "mongodb://localhost/pawdr",
-    secretOrKey: "mMqQ5h[=K8^K.G,3"
-  };
+  mongoURI: process.env.MONGODB_URI,
+  passportKey: process.env.PASSPORT_KEY
+};
