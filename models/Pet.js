@@ -22,6 +22,9 @@ const PetSchema = new Schema({
   ownerId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User"
+  },
+  location: {
+    type: String
   }
 });
 

@@ -6,6 +6,8 @@ import Paper from "@material-ui/core/Paper";
 import InputBase from "@material-ui/core/InputBase";
 import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
+import { Search } from "../../services/SearchService";
+import PetMiniProfile from "../../components/PetMiniProfile";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -35,7 +37,7 @@ export default function SignIn() {
   const [formData, setFormData] = useState({
     search: ""
   });
-
+  const [searchResults, setSearchResults] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   function onChange(e) {
@@ -58,7 +60,7 @@ export default function SignIn() {
     return false;
   }
 
-  function onSubmit(e) {
+  async function onSubmit(e) {
     e.preventDefault();
 
     if (validateForm()) return;
@@ -67,7 +69,9 @@ export default function SignIn() {
 
     try {
       setIsSubmitting(true);
-      console.log("SEARCHING...", formData);
+      const { data } = await Search(formData.search);
+      setIsSubmitting(false);
+      setSearchResults(data);
     } catch (e) {
       setIsSubmitting(false);
       console.error(e.response.data);
@@ -97,6 +101,17 @@ export default function SignIn() {
             <SearchIcon />
           </IconButton>
         </Paper>
+
+        {searchResults.length > 0 && (
+          <Container style={{ marginTop: "24px" }}>
+            <Typography variant="h5" gutterBottom>
+              Search results
+            </Typography>
+            {searchResults.map(function renderPet(pet) {
+              return <PetMiniProfile key={pet.id} {...pet} />;
+            })}
+          </Container>
+        )}
       </div>
     </Container>
   );
