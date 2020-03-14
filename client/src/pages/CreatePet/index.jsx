@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { CreatePet } from "../../services/PetService";
 import { useHistory } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
+import InputLabel from "@material-ui/core/InputLabel";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+import { dogBreeds } from "../../configuration/dogBreeds";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -26,12 +30,24 @@ const useStyles = makeStyles(theme => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2)
+  },
+  formControl: {
+    width: "100%",
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(1)
   }
 }));
 
 export default function SignIn() {
   const classes = useStyles();
   const history = useHistory();
+
+  const inputLabel = React.useRef(null);
+  const [labelWidth, setLabelWidth] = React.useState(0);
+
+  useEffect(() => {
+    setLabelWidth(inputLabel.current.offsetWidth);
+  }, []);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -99,17 +115,27 @@ export default function SignIn() {
             autoFocus
           />
 
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="breed"
-            label="Breed"
-            onChange={onChange}
-            name="breed"
-            autoComplete="breed"
-          />
+          <FormControl variant="outlined" className={classes.formControl}>
+            <InputLabel ref={inputLabel} htmlFor="breed">
+              Breed
+            </InputLabel>
+            <Select
+              native
+              onChange={onChange}
+              labelWidth={labelWidth}
+              inputProps={{
+                name: "breed",
+                id: "breed"
+              }}
+            >
+              <option value="" />
+              {dogBreeds.map((breed, i) => (
+                <option key={`${breed}-${i}`} value={breed}>
+                  {breed}
+                </option>
+              ))}
+            </Select>
+          </FormControl>
           <TextField
             variant="outlined"
             margin="normal"
