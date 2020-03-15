@@ -7,7 +7,7 @@ import InputBase from "@material-ui/core/InputBase";
 import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
 import { Search } from "../../services/SearchService";
-import PetMiniProfile from "../../components/PetMiniProfile";
+import Swiper from "../../components/Swiper";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -35,7 +35,7 @@ export default function SignIn() {
   const classes = useStyles();
 
   const [formData, setFormData] = useState({
-    search: ""
+    search: "Shrewsbury"
   });
   const [searchResults, setSearchResults] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -107,9 +107,7 @@ export default function SignIn() {
             <Typography variant="h5" gutterBottom>
               Search results
             </Typography>
-            {searchResults.map(function renderPet(pet) {
-              return <PetMiniProfile key={pet.id} {...pet} />;
-            })}
+            <Swiper results={searchResults} />
           </Container>
         )}
       </div>
