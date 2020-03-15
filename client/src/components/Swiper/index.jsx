@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
     background: "#80b234",
     padding: theme.spacing(2),
     position: "absolute",
-    right: "6px",
+    right: "-30px",
     top: "46%",
     zIndex: "1",
     marginTop: "-19px",
