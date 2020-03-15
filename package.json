@@ -11,7 +11,8 @@
     "install": "cd client && npm install",
     "build": "cd client && npm run build",
     "heroku-postbuild": "npm run build",
-    "nm": "nodemon server.js"
+    "nm": "nodemon server.js",
+    "seed": "node seeders/users.js"
   },
   "dependencies": {
     "axios": "^0.19.2",
@@ -26,6 +27,7 @@
     "jwt-decode": "^2.2.0",
     "mongodb": "^3.5.4",
     "mongoose": "^5.9.2",
+    "mongoose-seed": "^0.6.0",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "path": "^0.12.7",
@@ -46,5 +48,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "mdSeed": {
+    "seedersFolder": "./seeders",
+    "customSeederTemplate": "./md-seed-template.ejs"
   }
 }
