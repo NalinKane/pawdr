@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
@@ -39,6 +39,22 @@ export default function SignIn() {
   });
   const [searchResults, setSearchResults] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    async function getData() {
+      try {
+        setIsSubmitting(true);
+        const { data } = await Search(formData.search);
+        setIsSubmitting(false);
+        setSearchResults(data);
+      } catch (e) {
+        setIsSubmitting(false);
+        console.error(e.response.data);
+      }
+    }
+
+    getData();
+  }, []);
 
   function onChange(e) {
     e.preventDefault();
