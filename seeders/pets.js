@@ -4,9 +4,10 @@ const seeder = require("mongoose-seed");
 const db = require("../config/keys").mongoURI;
 const User = require("../models/User");
 
-function injectOwnerId(owners, pets) {
+function injectOwnerData(owners, pets) {
   pets.map((pet, i) => {
     pet.ownerId = owners[i]._id;
+    pet.location = owners[i].location;
   });
 }
 
@@ -17,7 +18,7 @@ seeder.connect(db, async () => {
     try {
       // assign pets to owners, one by one
       const allUsers = await User.find({});
-      injectOwnerId(allUsers, data[0].documents);
+      injectOwnerData(allUsers, data[0].documents);
 
       seeder.populateModels(data, function() {
         seeder.disconnect();

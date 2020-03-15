@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Pet = require("./Pet");
 
 const UserSchema = new mongoose.Schema({
   firstName: {
@@ -28,6 +29,12 @@ const UserSchema = new mongoose.Schema({
   date: {
     type: Date,
     default: Date.now
+  }
+});
+
+UserSchema.pre("save", async function() {
+  if (this.isModified("location")) {
+    await Pet.updateMany({ location: this.location });
   }
 });
 
