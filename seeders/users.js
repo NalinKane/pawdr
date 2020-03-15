@@ -1,8 +1,8 @@
 require("dotenv").config();
 
+const bcrypt = require("bcryptjs");
 const seeder = require("mongoose-seed");
 const db = require("../config/keys").mongoURI;
-const bcrypt = require("bcryptjs");
 
 async function hashPasswords(data) {
   // Create list of promises per each user
@@ -39,7 +39,7 @@ const data = [
       {
         firstName: "Shaggy",
         lastName: "Scragmore",
-        location: "Shrewsbury",
+        location: "Shifnal",
         username: "shagger",
         email: "shagmore@gmail.com",
         password: "123123"
@@ -47,7 +47,7 @@ const data = [
       {
         firstName: "Sean",
         lastName: "Bean",
-        location: "Shrewsbury",
+        location: "Shifnal",
         username: "beanz",
         email: "sbean@gmail.com",
         password: "qwerty"
@@ -83,6 +83,14 @@ const data = [
         username: "Kellz",
         email: "lula@gmail.com",
         password: "nomnom"
+      },
+      {
+        firstName: "Kacper",
+        lastName: "Lebiedziewicz",
+        location: "Shifnal",
+        username: "kasperoo",
+        email: "kasperoo@outlook.com",
+        password: "qwerty"
       }
     ]
   }

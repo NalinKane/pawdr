@@ -12,7 +12,7 @@
     "build": "cd client && npm run build",
     "heroku-postbuild": "npm run build",
     "nm": "nodemon server.js",
-    "seed": "node seeders/users.js"
+    "seed": "node seeders/users.js && node seeders/pets.js"
   },
   "dependencies": {
     "axios": "^0.19.2",
