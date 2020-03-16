@@ -4,6 +4,7 @@ import PetMiniProfile from "../../components/PetMiniProfile";
 import IconButton from "@material-ui/core/IconButton";
 import ThumbDown from "@material-ui/icons/ThumbDown";
 import ThumbUp from "@material-ui/icons/ThumbUp";
+import { LikePet } from "../../services/PetService";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -49,8 +50,14 @@ export default function Layout({ results }) {
     }
   }
 
-  function handleLike(petId) {
+  async function handleLike(petId) {
     console.log("post request for like", petId);
+    try {
+      await LikePet(petId);
+      console.log("lojkd");
+    } catch (e) {
+      throw new Error(e);
+    }
     increateCounter();
   }
 

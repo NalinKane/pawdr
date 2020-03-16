@@ -71,4 +71,75 @@ router.get(
   }
 );
 
+// @route POST api/pets/like
+// @desc Like a pet
+// @access Private
+router.post(
+  "/like",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    try {
+      const { user, body } = res.req;
+
+      // currently logged in user
+      const currentUser = await User.findOne({ _id: user._id });
+
+      // target pet && user
+      const targetPet = await Pet.findOne({ _id: body.id });
+      const targetUser = await User.findOne({ _id: targetPet.ownerId });
+
+      // save to current user's like[]
+      // or
+      // save to table
+      /*
+
+      likes: [
+        { otherUserId: xxx,
+          otherUserPetId: yyy,
+          Date: zzz
+        },
+        { otherUserId: xxx,
+          otherUserPetId: yyy,
+          Date: zzz
+        },
+        { otherUserId: xxx,
+          otherUserPetId: yyy,
+          Date: zzz
+        }
+      ]
+      
+      or
+
+      userId     |      likes      |     dislikes 
+      ID             IDs[]            IDs[]
+
+      or
+
+
+      MATCH collection:
+      _id    |    swiperId   |    targetSwiperId   |      match      |   Date
+      1      |    100        |      200            |    true         |  10AM
+      2      |    200        |      100            |    true         |  11AM
+      
+
+      1. userId 100 logs in, goes to her pawboard
+      2. Automatically makes a GET request to see potential matches
+        - in the MATCH collection, find targetSwiperId with my ID of 100;
+        - display the target pet
+      */
+
+      console.log("Pet belongs to", targetUser);
+
+      // newPet
+      //   .save()
+      //   .then(pet => res.json(pet))
+      //   .catch(err => console.log(err));
+
+      res.json({ ok: true });
+    } catch (error) {
+      console.warn(error);
+    }
+  }
+);
+
 module.exports = router;

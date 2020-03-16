@@ -22,3 +22,17 @@ export async function GetMyPets() {
     throw new Error(e);
   }
 }
+
+export async function LikePet(id) {
+  try {
+    const body = JSON.stringify({ id });
+
+    return axios.post("/api/pets/like", body, {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+  } catch (e) {
+    throw new Error(e);
+  }
+}
