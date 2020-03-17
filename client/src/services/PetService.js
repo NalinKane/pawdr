@@ -36,3 +36,15 @@ export async function MatchRequest(id, match) {
     throw new Error(e);
   }
 }
+
+export async function GetMatches() {
+  try {
+    return axios.get("/api/pets/getMatches", {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+  } catch (e) {
+    throw new Error(e);
+  }
+}

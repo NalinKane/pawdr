@@ -97,23 +97,52 @@ router.post(
         .save()
         .then(match => res.json(match))
         .catch(err => console.log(err));
+    } catch (error) {
+      console.warn(error);
+    }
+  }
+);
 
-      /*
+// @route GET api/pets/getMatches
+// @desc Show matched pets
+// @access Private
+router.get(
+  "/getMatches",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    try {
+      const { user } = res.req;
 
-    
-      MATCH collection:
-      _id    |    userId     |    toUserId         |      match      |   Date
-      1      |    100        |      200            |    true         |  10AM
-      2      |    200        |      100            |    true         |  11AM
-      
+      const owner = await User.findOne({ _id: user._id });
 
-     1. Making <GET> getMatches request
-     2. Find all records where toUserId === my logged in userId && match === true
+      const matches = await Match.find({
+        toUserId: owner._id,
+        match: true
+      });
 
+      const targetIds = matches.map(match => {
+        return match.userId;
+      });
 
-      */
+      const query = Pet.find({
+        ownerId: { $in: targetIds }
+      });
 
-      console.log("Pet belongs to", targetUser);
+      query.getFilter();
+
+      const matchedPets = await query.exec();
+
+      const transformedMatches = matchedPets.map(pet => {
+        return {
+          name: pet.name,
+          breed: pet.breed,
+          age: pet.age,
+          photo: pet.photo,
+          id: pet._id
+        };
+      });
+
+      res.send(transformedMatches);
     } catch (error) {
       console.warn(error);
     }
