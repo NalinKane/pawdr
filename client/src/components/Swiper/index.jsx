@@ -4,7 +4,7 @@ import PetMiniProfile from "../../components/PetMiniProfile";
 import IconButton from "@material-ui/core/IconButton";
 import ThumbDown from "@material-ui/icons/ThumbDown";
 import ThumbUp from "@material-ui/icons/ThumbUp";
-import { LikePet } from "../../services/PetService";
+import { MatchRequest } from "../../services/PetService";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -50,10 +50,10 @@ export default function Layout({ results }) {
     }
   }
 
-  async function handleLike(petId) {
-    console.log("post request for like", petId);
+  async function handleMatch(petId, match) {
+    console.log("post request for match", petId, match);
     try {
-      await LikePet(petId);
+      await MatchRequest(petId, match);
       console.log("lojkd");
     } catch (e) {
       throw new Error(e);
@@ -76,7 +76,7 @@ export default function Layout({ results }) {
         <IconButton
           aria-label="Dislike"
           className={dislikeIcon}
-          onClick={() => handleDislike(pet.id)}
+          onClick={() => handleMatch(pet.id, false)}
         >
           <ThumbDown className={icon} />
         </IconButton>
@@ -89,9 +89,9 @@ export default function Layout({ results }) {
       {showNoMore && <h2>That's it for today!</h2>}
       {showActions && (
         <IconButton
-          aria-label="Dislike"
+          aria-label="Like"
           className={likeIcon}
-          onClick={() => handleLike(pet.id)}
+          onClick={() => handleMatch(pet.id, true)}
         >
           <ThumbUp className={icon} />
         </IconButton>

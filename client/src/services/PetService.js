@@ -23,11 +23,11 @@ export async function GetMyPets() {
   }
 }
 
-export async function LikePet(id) {
+export async function MatchRequest(id, match) {
   try {
-    const body = JSON.stringify({ id });
+    const body = JSON.stringify({ id, match });
 
-    return axios.post("/api/pets/like", body, {
+    return axios.post("/api/pets/matchRequest", body, {
       headers: {
         "Content-Type": "application/json"
       }

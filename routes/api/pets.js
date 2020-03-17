@@ -1,8 +1,7 @@
 const express = require("express");
 const passport = require("passport");
 const router = express.Router();
-const Pet = require("../../models/Pet");
-const User = require("../../models/User");
+const { Pet, User, Match } = require("../../models");
 
 // @route POST api/pets/create
 // @desc Create pet
@@ -71,11 +70,11 @@ router.get(
   }
 );
 
-// @route POST api/pets/like
-// @desc Like a pet
+// @route POST api/pets/matchRequest
+// @desc Like or dislike a pet
 // @access Private
 router.post(
-  "/like",
+  "/matchRequest",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     try {
@@ -88,54 +87,33 @@ router.post(
       const targetPet = await Pet.findOne({ _id: body.id });
       const targetUser = await User.findOne({ _id: targetPet.ownerId });
 
-      // save to current user's like[]
-      // or
-      // save to table
+      const newMatch = new Match({
+        userId: currentUser._id,
+        toUserId: targetUser._id,
+        match: body.match
+      });
+
+      newMatch
+        .save()
+        .then(match => res.json(match))
+        .catch(err => console.log(err));
+
       /*
 
-      likes: [
-        { otherUserId: xxx,
-          otherUserPetId: yyy,
-          Date: zzz
-        },
-        { otherUserId: xxx,
-          otherUserPetId: yyy,
-          Date: zzz
-        },
-        { otherUserId: xxx,
-          otherUserPetId: yyy,
-          Date: zzz
-        }
-      ]
-      
-      or
-
-      userId     |      likes      |     dislikes 
-      ID             IDs[]            IDs[]
-
-      or
-
-
+    
       MATCH collection:
-      _id    |    swiperId   |    targetSwiperId   |      match      |   Date
+      _id    |    userId     |    toUserId         |      match      |   Date
       1      |    100        |      200            |    true         |  10AM
       2      |    200        |      100            |    true         |  11AM
       
 
-      1. userId 100 logs in, goes to her pawboard
-      2. Automatically makes a GET request to see potential matches
-        - in the MATCH collection, find targetSwiperId with my ID of 100;
-        - display the target pet
+     1. Making <GET> getMatches request
+     2. Find all records where toUserId === my logged in userId && match === true
+
+
       */
 
       console.log("Pet belongs to", targetUser);
-
-      // newPet
-      //   .save()
-      //   .then(pet => res.json(pet))
-      //   .catch(err => console.log(err));
-
-      res.json({ ok: true });
     } catch (error) {
       console.warn(error);
     }
