@@ -35,26 +35,10 @@ export default function SignIn() {
   const classes = useStyles();
 
   const [formData, setFormData] = useState({
-    search: "Shrewsbury"
+    search: ""
   });
-  const [searchResults, setSearchResults] = useState([]);
+  const [searchResults, setSearchResults] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  useEffect(() => {
-    async function getData() {
-      try {
-        setIsSubmitting(true);
-        const { data } = await Search(formData.search);
-        setIsSubmitting(false);
-        setSearchResults(data);
-      } catch (e) {
-        setIsSubmitting(false);
-        console.error(e.response.data);
-      }
-    }
-
-    getData();
-  }, []);
 
   function onChange(e) {
     e.preventDefault();
@@ -118,12 +102,20 @@ export default function SignIn() {
           </IconButton>
         </Paper>
 
-        {searchResults.length > 0 && (
+        {searchResults && searchResults.length > 0 && (
           <Container style={{ marginTop: "24px" }}>
             <Typography variant="h5" gutterBottom>
               Search results
             </Typography>
             <Swiper results={searchResults} />
+          </Container>
+        )}
+
+        {searchResults && searchResults.length === 0 && (
+          <Container style={{ marginTop: "24px" }}>
+            <Typography variant="h5" gutterBottom>
+              No new pets found
+            </Typography>
           </Container>
         )}
       </div>

@@ -62,10 +62,8 @@ export default function SignIn() {
       await Register(formData);
       history.push("/login");
     } catch (e) {
-      console.log("error", e.response.data);
+      console.error("error", e.response.data);
     }
-
-    console.log(formData);
   }
 
   return (

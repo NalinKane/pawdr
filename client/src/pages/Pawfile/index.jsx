@@ -16,7 +16,7 @@ export default function Pawfile() {
         const data = await GetMyPets();
         setMyPets(data);
       } catch (e) {
-        console.log("error", e.response.data);
+        console.error("error", e.response.data);
       }
     }
 
@@ -30,14 +30,13 @@ export default function Pawfile() {
 
         setMatches(data);
       } catch (e) {
-        console.log("error", e.response.data);
+        console.error("error", e.response.data);
       }
     }
 
     getMatches();
   }, []);
 
-  console.log(matches);
   return (
     <Container component="main" maxWidth="xs">
       <Typography component="h1" variant="h3">
@@ -64,7 +63,7 @@ export default function Pawfile() {
         </>
       )}
 
-      {matches && (
+      {matches && matches.length > 0 && (
         <>
           <Typography component="h2" variant="h5" style={{ marginTop: "24px" }}>
             My matches

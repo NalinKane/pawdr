@@ -1,8 +1,7 @@
 const express = require("express");
 const passport = require("passport");
 const router = express.Router();
-const Pet = require("../../models/Pet");
-const User = require("../../models/User");
+const { Pet, User, Match } = require("../../models");
 
 router.post(
   "/",
@@ -14,9 +13,19 @@ router.post(
 
       const owner = await User.findOne({ _id: user._id });
 
+      // find all active like/dislike requests and exclude them later
+      const userMatchRequests = await Match.find({
+        userId: owner._id
+      });
+
+      const excludedIds = userMatchRequests.map(match => {
+        return match.toUserId;
+      });
+
       // find pets excluding current owner's ones
       const query = Pet.find({
-        location: searchTerm
+        location: searchTerm,
+        ownerId: { $nin: excludedIds }
       })
         .where("ownerId")
         .ne(owner._id);

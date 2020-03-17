@@ -51,18 +51,11 @@ export default function Layout({ results }) {
   }
 
   async function handleMatch(petId, match) {
-    console.log("post request for match", petId, match);
     try {
       await MatchRequest(petId, match);
-      console.log("lojkd");
     } catch (e) {
       throw new Error(e);
     }
-    increateCounter();
-  }
-
-  function handleDislike(petId) {
-    console.log("post request for dislike", petId);
     increateCounter();
   }
 
