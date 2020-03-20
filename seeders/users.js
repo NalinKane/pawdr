@@ -91,6 +91,38 @@ const data = [
         username: "kasperoo",
         email: "kasperoo@outlook.com",
         password: "qwerty"
+      },
+      {
+        firstName: "Alice",
+        lastName: "Carroll",
+        location: "Birmingham",
+        username: "alcor",
+        email: "alicecarroll@yahoo.com",
+        password: "123123"
+      },
+      {
+        firstName: "Daisy",
+        lastName: "Moore",
+        location: "Birmingham",
+        username: "daiz",
+        email: "daisymoore@gmail.com",
+        password: "woofwoof"
+      },
+      {
+        firstName: "Dusty",
+        lastName: "Springfield",
+        location: "Birmingham",
+        username: "dusty",
+        email: "dustys@gmail.com",
+        password: "password"
+      },
+      {
+        firstName: "Emily",
+        lastName: "Ware",
+        location: "Birmingham",
+        username: "Millz",
+        email: "millz@gmail.com",
+        password: "lame123"
       }
     ]
   }

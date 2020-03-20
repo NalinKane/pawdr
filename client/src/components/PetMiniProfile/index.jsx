@@ -13,7 +13,7 @@ import Popup from "../Popup";
 const useStyles = makeStyles({
   root: {},
   media: {
-    height: 140
+    height: 280
   }
 });
 
@@ -59,7 +59,7 @@ export default function PetMiniProfile({
             component={RouterLink}
             to="/edit-pet"
           >
-            Edit new pet
+            Edit my pet
           </Button>
         </CardActions>
       )}
