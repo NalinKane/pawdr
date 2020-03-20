@@ -68,7 +68,7 @@ export default function Pawfile() {
           </Button>
         )}
       </Paper>
-      {myPets.length && (
+      {myPets.length > 0 && (
         <>
           <Typography component="h2" variant="h5" gutterBottom>
             My pets
