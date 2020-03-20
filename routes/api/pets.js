@@ -173,7 +173,13 @@ router.get(
           breed: pet.breed,
           age: pet.age,
           photo: pet.photo,
-          id: pet._id
+          id: pet._id,
+          owner: {
+            name: `${owner.firstName} ${owner.lastName}`,
+            location: owner.location,
+            username: owner.username,
+            email: owner.email
+          }
         };
       });
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -8,6 +8,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import { Link as RouterLink } from "react-router-dom";
+import Popup from "../Popup";
 
 const useStyles = makeStyles({
   root: {},
@@ -16,8 +17,24 @@ const useStyles = makeStyles({
   }
 });
 
-export default function PetMiniProfile({ name, breed, age, photo, edit }) {
+export default function PetMiniProfile({
+  name,
+  breed,
+  age,
+  photo,
+  edit,
+  user = null
+}) {
   const classes = useStyles();
+  const [openPopup, setOpenPopup] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpenPopup(true);
+  };
+  const handleClose = () => {
+    setOpenPopup(false);
+  };
+
   return (
     <Card className={classes.root}>
       <CardActionArea>
@@ -44,6 +61,28 @@ export default function PetMiniProfile({ name, breed, age, photo, edit }) {
           >
             Edit new pet
           </Button>
+        </CardActions>
+      )}
+      {user && (
+        <CardActions>
+          <Button size="small" color="primary" onClick={handleClickOpen}>
+            Contact owner
+          </Button>
+          <Popup
+            handleClose={handleClose}
+            openPopup={openPopup}
+            title="Contact owner"
+          >
+            <Typography gutterBottom>
+              The owner of {name} is {user.name}
+            </Typography>
+            <Typography gutterBottom>
+              To get in touch with them, check their details below:
+            </Typography>
+            <Typography gutterBottom>
+              Email: <a href={`mailto:${user.email}`}>{user.email}</a>
+            </Typography>
+          </Popup>
         </CardActions>
       )}
     </Card>

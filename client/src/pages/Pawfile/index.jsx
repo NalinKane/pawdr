@@ -81,14 +81,14 @@ export default function Pawfile() {
       )}
 
       {matches.length > 0 && (
-        <>
+        <div>
           <Typography component="h2" variant="h5" style={{ marginTop: "24px" }}>
             My matches
           </Typography>
           {matches.map(function renderPet(pet) {
-            return <PetMiniProfile key={pet.id} {...pet} />;
+            return <PetMiniProfile key={pet.id} user={pet.owner} {...pet} />;
           })}
-        </>
+        </div>
       )}
     </Container>
   );
