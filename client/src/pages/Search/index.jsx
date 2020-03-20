@@ -8,6 +8,7 @@ import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
 import { Search } from "../../services/SearchService";
 import Swiper from "../../components/Swiper";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -68,12 +69,14 @@ export default function SignIn() {
     if (isSubmitting) return;
 
     try {
+      setSearchResults(null);
       setIsSubmitting(true);
       const { data } = await Search(formData.search);
       setIsSubmitting(false);
       setSearchResults(data);
     } catch (e) {
       setIsSubmitting(false);
+      setSearchResults(null);
       console.error(e.response.data);
     }
   }
@@ -90,17 +93,25 @@ export default function SignIn() {
             className={classes.input}
             placeholder="e.g. Shifnal"
             name="search"
+            disabled={isSubmitting}
             onChange={onChange}
             inputProps={{ "aria-label": "search for pets near you" }}
           />
           <IconButton
             onClick={onSubmit}
+            disabled={isSubmitting}
             className={classes.iconButton}
             aria-label="search"
           >
             <SearchIcon />
           </IconButton>
         </Paper>
+
+        {isSubmitting && (
+          <div style={{ marginTop: "16px" }}>
+            <CircularProgress />
+          </div>
+        )}
 
         {searchResults && searchResults.length > 0 && (
           <Container style={{ marginTop: "24px" }}>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
@@ -42,8 +42,8 @@ export default function CreatePet() {
   const classes = useStyles();
   const history = useHistory();
 
-  const inputLabel = React.useRef(null);
-  const [labelWidth, setLabelWidth] = React.useState(0);
+  const inputLabel = useRef(null);
+  const [labelWidth, setLabelWidth] = useState(0);
 
   useEffect(() => {
     setLabelWidth(inputLabel.current.offsetWidth);
