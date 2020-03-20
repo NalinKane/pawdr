@@ -9,6 +9,7 @@ import { setAuthToken } from "./utils/setAuthToken";
 import { useCustomerStore } from "./store";
 import PrivateRoute from "./components/PrivateRoute";
 import CreatePet from "./pages/CreatePet";
+import EditPet from "./pages/EditPet";
 import Pawfile from "./pages/Pawfile";
 import Search from "./pages/Search";
 
@@ -61,6 +62,9 @@ function App() {
               </PrivateRoute>
               <PrivateRoute path="/search">
                 <Search />
+              </PrivateRoute>
+              <PrivateRoute path="/edit-pet">
+                <EditPet />
               </PrivateRoute>
             </Switch>
           )}

@@ -1,10 +1,24 @@
 import axios from "axios";
 
-export async function CreatePet(petData) {
+export async function CreateNewPet(petData) {
   try {
     const body = JSON.stringify(petData);
 
     return axios.post("/api/pets/create", body, {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+  } catch (e) {
+    throw new Error(e);
+  }
+}
+
+export async function UpdatePet(petData) {
+  try {
+    const body = JSON.stringify(petData);
+
+    return axios.post("/api/pets/update", body, {
       headers: {
         "Content-Type": "application/json"
       }

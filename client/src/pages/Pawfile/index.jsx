@@ -1,14 +1,24 @@
 import React, { useEffect, useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
 import { Link as RouterLink } from "react-router-dom";
 import { GetMyPets, GetMatches } from "../../services/PetService";
 import PetMiniProfile from "../../components/PetMiniProfile";
+import Paper from "@material-ui/core/Paper";
+
+const useStyles = makeStyles(theme => ({
+  paper: {
+    margin: theme.spacing(2, 0),
+    padding: theme.spacing(1)
+  }
+}));
 
 export default function Pawfile() {
-  const [myPets, setMyPets] = useState(null);
-  const [matches, setMatches] = useState(null);
+  const [myPets, setMyPets] = useState([]);
+  const [matches, setMatches] = useState([]);
+  const { paper } = useStyles();
 
   useEffect(() => {
     async function getMyPets() {
@@ -42,36 +52,42 @@ export default function Pawfile() {
       <Typography component="h1" variant="h3">
         My Pawfile
       </Typography>
-      <Button
-        variant="contained"
-        color="primary"
-        component={RouterLink}
-        to="/create-pet"
-      >
-        Add a new pet
-      </Button>
-      <hr />
-      {myPets && (
+      <Paper className={paper}>
+        <Typography variant="body1">
+          Here you can create and manage your pet, see your matches and contact
+          follow pawders.
+        </Typography>
+        {!myPets.length && (
+          <Button
+            variant="contained"
+            color="primary"
+            component={RouterLink}
+            to="/create-pet"
+          >
+            Add a new pet
+          </Button>
+        )}
+      </Paper>
+      {myPets.length && (
         <>
-          <Typography component="h2" variant="h5">
+          <Typography component="h2" variant="h5" gutterBottom>
             My pets
           </Typography>
-          {myPets.length > 0 &&
-            myPets.map(function renderPet(pet) {
-              return <PetMiniProfile key={pet.id} {...pet} />;
-            })}
+
+          {myPets.map(function renderPet(pet) {
+            return <PetMiniProfile key={pet.id} edit={true} {...pet} />;
+          })}
         </>
       )}
 
-      {matches && matches.length > 0 && (
+      {matches.length > 0 && (
         <>
           <Typography component="h2" variant="h5" style={{ marginTop: "24px" }}>
             My matches
           </Typography>
-          {matches.length > 0 &&
-            matches.map(function renderPet(pet) {
-              return <PetMiniProfile key={pet.id} {...pet} />;
-            })}
+          {matches.map(function renderPet(pet) {
+            return <PetMiniProfile key={pet.id} {...pet} />;
+          })}
         </>
       )}
     </Container>

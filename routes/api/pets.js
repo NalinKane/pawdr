@@ -33,6 +33,41 @@ router.post(
   }
 );
 
+// @route POST api/pets/update
+// @desc Update existing pet
+// @access Private
+router.post(
+  "/update",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    try {
+      const { user, body } = res.req;
+      const petOwner = await User.findOne({ _id: user._id });
+
+      if (!body.id) {
+        return res.status(400).json({ pet: "Pet not found" });
+      }
+
+      const updatedPet = await Pet.findByIdAndUpdate(
+        { _id: body.id },
+        {
+          name: body.name,
+          breed: body.breed,
+          age: body.age,
+          photo: body.photo
+        }
+      );
+
+      updatedPet
+        .save()
+        .then(pet => res.json(pet))
+        .catch(err => console.log(err));
+    } catch (error) {
+      console.warn(error);
+    }
+  }
+);
+
 // @route GET api/pets/show
 // @desc Show owners pets
 // @access Private

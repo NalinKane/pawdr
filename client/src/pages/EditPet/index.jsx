@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
+import EditIcon from "@material-ui/icons/Edit";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
-import { CreateNewPet } from "../../services/PetService";
+import { UpdatePet, GetMyPets } from "../../services/PetService";
 import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -38,23 +38,45 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function CreatePet() {
+export default function EditPet() {
   const classes = useStyles();
   const history = useHistory();
-
-  const inputLabel = React.useRef(null);
-  const [labelWidth, setLabelWidth] = React.useState(0);
-
-  useEffect(() => {
-    setLabelWidth(inputLabel.current.offsetWidth);
-  }, []);
+  const inputLabel = useRef(null);
+  const [labelWidth, setLabelWidth] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   const [formData, setFormData] = useState({
     name: "",
     breed: "",
     age: "",
-    photo: ""
+    photo: "",
+    id: ""
   });
+
+  useEffect(() => {
+    async function getMyPets() {
+      try {
+        const data = await GetMyPets();
+        setFormData(data[0]);
+        setLoading(false);
+      } catch (e) {
+        setLoading(false);
+        console.error("error", e.response.data);
+      }
+    }
+
+    getMyPets();
+  }, []);
+
+  useEffect(() => {
+    if (!loading) {
+      setLabelWidth(inputLabel.current.offsetWidth);
+    }
+  }, []);
+
+  if (loading) {
+    return <Typography variant="body1">Loading my pet...</Typography>;
+  }
 
   function onChange(e) {
     e.preventDefault();
@@ -82,7 +104,7 @@ export default function CreatePet() {
     if (validateForm()) return;
 
     try {
-      await CreateNewPet(formData);
+      await UpdatePet(formData);
       history.push("/pawfile");
     } catch (e) {
       console.error("error", e.response.data);
@@ -93,10 +115,10 @@ export default function CreatePet() {
     <Container component="main" maxWidth="xs">
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
-          <AddCircleOutlineIcon />
+          <EditIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Create new pawfile
+          Edit my pet
         </Typography>
         <form className={classes.form} noValidate>
           <TextField
@@ -107,6 +129,7 @@ export default function CreatePet() {
             id="name"
             label="My pet's name"
             name="name"
+            value={formData.name}
             autoComplete="name"
             onChange={onChange}
             autoFocus
@@ -120,6 +143,7 @@ export default function CreatePet() {
               native
               onChange={onChange}
               labelWidth={labelWidth}
+              value={formData.breed}
               inputProps={{
                 name: "breed",
                 id: "breed"
@@ -143,6 +167,7 @@ export default function CreatePet() {
             onChange={onChange}
             name="age"
             autoComplete="age"
+            value={formData.age}
           />
           <TextField
             variant="outlined"
@@ -155,6 +180,7 @@ export default function CreatePet() {
             onChange={onChange}
             id="photo"
             autoComplete="photo"
+            value={formData.photo}
           />
 
           <Button
@@ -165,7 +191,7 @@ export default function CreatePet() {
             className={classes.submit}
             onClick={onSubmit}
           >
-            Create
+            Update
           </Button>
         </form>
       </div>
