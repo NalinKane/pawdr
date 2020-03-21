@@ -159,21 +159,17 @@ router.get(
         return match.userId;
       });
 
-      const query = Pet.find({
+      const matchedPets = await Pet.find({
         ownerId: { $in: targetIds }
       });
 
-      query.getFilter();
-
-      const matchedPets = await query.exec();
-
-      const ownerQuery = User.find({ _id: { $in: targetIds } });
-      ownerQuery.getFilter();
-      const matchedOwners = await ownerQuery.exec();
-
-      // console.log("matched owners", matchedOwners);
+      const matchedOwners = await User.find({ _id: { $in: targetIds } });
 
       const transformedMatches = matchedPets.map(pet => {
+        const [petOwner] = matchedOwners.filter(
+          owner => owner._id.toString() === pet.ownerId.toString()
+        );
+
         return {
           name: pet.name,
           breed: pet.breed,
@@ -181,10 +177,10 @@ router.get(
           photo: pet.photo,
           id: pet._id,
           owner: {
-            name: `${matchedOwners[0].firstName} ${matchedOwners[0].lastName}`,
-            location: matchedOwners[0].location,
-            username: matchedOwners[0].username,
-            email: matchedOwners[0].email
+            name: `${petOwner.firstName} ${petOwner.lastName}`,
+            location: petOwner.location,
+            username: petOwner.username,
+            email: petOwner.email
           }
         };
       });
