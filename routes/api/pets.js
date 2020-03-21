@@ -167,6 +167,12 @@ router.get(
 
       const matchedPets = await query.exec();
 
+      const ownerQuery = User.find({ _id: { $in: targetIds } });
+      ownerQuery.getFilter();
+      const matchedOwners = await ownerQuery.exec();
+
+      // console.log("matched owners", matchedOwners);
+
       const transformedMatches = matchedPets.map(pet => {
         return {
           name: pet.name,
@@ -175,10 +181,10 @@ router.get(
           photo: pet.photo,
           id: pet._id,
           owner: {
-            name: `${owner.firstName} ${owner.lastName}`,
-            location: owner.location,
-            username: owner.username,
-            email: owner.email
+            name: `${matchedOwners[0].firstName} ${matchedOwners[0].lastName}`,
+            location: matchedOwners[0].location,
+            username: matchedOwners[0].username,
+            email: matchedOwners[0].email
           }
         };
       });
